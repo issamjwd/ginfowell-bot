@@ -18,13 +18,13 @@ try {
     if ($to -eq 'on') {
         & $gh workflow enable episode.yml; if ($LASTEXITCODE -ne 0) { throw 'could not turn the schedule on' }
         & $gh variable set BOT_ENABLED --body true; if ($LASTEXITCODE -ne 0) { throw 'could not flip the switch' }
-        $msg = "Channel bot is ON.`n`nIt posts 3 Shorts a day, plus a long video on the LONG_DAYS days (Mon / Wed / Fri unless you change it), on GitHub's computers, not this PC.`nNext video: $(Next-Run)."
-        $shell.Popup($msg, 0, 'PIXELHELM channel bot', 64) | Out-Null
+        $msg = "Channel bot is ON.`n`nIt posts 3 to 5 Shorts a day (4 from December), on GitHub's computers, not this PC.`nNext video: $(Next-Run)."
+        $shell.Popup($msg, 0, 'ginfowell bot', 64) | Out-Null
     } else {
         & $gh variable set BOT_ENABLED --body false; if ($LASTEXITCODE -ne 0) { throw 'could not flip the switch' }
         & $gh workflow disable episode.yml; if ($LASTEXITCODE -ne 0) { throw 'could not turn the schedule off' }
-        $shell.Popup("Channel bot is OFF.`n`nNo more videos until you press START.", 0, 'PIXELHELM channel bot', 64) | Out-Null
+        $shell.Popup("Channel bot is OFF.`n`nNo more videos until you press START.", 0, 'ginfowell bot', 64) | Out-Null
     }
 } catch {
-    $shell.Popup("Didn't work: $_`n`nIf you never ran 'connect channel bot', run it first.", 0, 'PIXELHELM channel bot', 16) | Out-Null
+    $shell.Popup("Didn't work: $_`n`nIf you never ran 'connect ginfowell bot', run it first.", 0, 'ginfowell bot', 16) | Out-Null
 }
