@@ -1,0 +1,1313 @@
+{
+ "_note": "Tags for gameplay clips (footage release footage-v4 / footage-v4-wide: all 13 levels re-recorded 2026-11-06 with the photoreal look, graphics tier 4 / ultra, Realistic lighting, PBR materials, the new monster looks; no game UI). The Shorts open on a clip tagged scare (at its peak) and put a scare/chase clip at the turn; Shorts use only clips tagged vertical-safe; the long video gives a chapter to every dream with 4+ tagged clips. Peaks: from the recording manifest, else tools/footage_peaks.json. The release manifest's own tags win. Generated 2026-11-06.",
+ "_cold_open_note": "cold_open_ok: clips whose frame 0.3 s before the peak shows the monster big, sharp and well lit in the Shorts' 8:9 strip (scored by eye 2026-11-06 on a peak-0.3 s contact sheet of every monster clip). No night, tunnel, flicker-dark or empty openers. A Short opens on one of these, starting 0.3 s before its peak.",
+ "cold_open_ok": [
+  "atrium_approach_01",
+  "atrium_chase_01",
+  "atrium_hero_01",
+  "field_scarecrow_approach_01",
+  "field_hero_01",
+  "halls_approach_01",
+  "halls_approach_02",
+  "halls_flicker_scare_01",
+  "halls_reveal_01",
+  "hills_day_approach_01",
+  "hills_day_hero_01",
+  "library_approach_02",
+  "library_flicker_scare_01",
+  "library_hero_02",
+  "playplace_approach_01",
+  "playplace_chase_01",
+  "playplace_flicker_scare_01",
+  "playplace_hero_01",
+  "playplace_reveal_01",
+  "pool_approach_02",
+  "school_approach_02",
+  "school_chase_01",
+  "school_flicker_scare_01",
+  "school_hero_01",
+  "school_hero_02",
+  "school_reveal_01",
+  "subway_chase_02",
+  "subway_conductor_approach_01",
+  "subway_lantern_hero_01",
+  "train_approach_01",
+  "train_chase_01",
+  "train_reveal_01"
+ ],
+ "clips": {
+  "atrium_approach_01": {
+   "tags": [
+    "monster",
+    "scare",
+    "clean",
+    "vertical-safe",
+    "motion=dolly"
+   ],
+   "peak": 6.0,
+   "level": "atrium"
+  },
+  "atrium_chase_01": {
+   "tags": [
+    "monster",
+    "chase",
+    "clean",
+    "vertical-safe",
+    "motion=handheld"
+   ],
+   "peak": 5.2,
+   "level": "atrium"
+  },
+  "atrium_crane_01": {
+   "tags": [
+    "wide",
+    "clean",
+    "motion=dolly"
+   ],
+   "level": "atrium"
+  },
+  "atrium_crane_02": {
+   "tags": [
+    "wide",
+    "clean",
+    "motion=dolly"
+   ],
+   "level": "atrium"
+  },
+  "atrium_crane_03": {
+   "tags": [
+    "wide",
+    "clean",
+    "motion=dolly"
+   ],
+   "level": "atrium"
+  },
+  "atrium_dollyzoom_01": {
+   "tags": [
+    "wide",
+    "clean",
+    "vertical-safe",
+    "motion=dolly"
+   ],
+   "level": "atrium"
+  },
+  "atrium_glide_01": {
+   "tags": [
+    "wide",
+    "clean",
+    "motion=dolly"
+   ],
+   "level": "atrium"
+  },
+  "atrium_hero_01": {
+   "tags": [
+    "monster",
+    "clean",
+    "vertical-safe",
+    "motion=dolly"
+   ],
+   "peak": 3.0,
+   "level": "atrium"
+  },
+  "atrium_reveal_01": {
+   "tags": [
+    "monster",
+    "reveal",
+    "scare",
+    "clean",
+    "vertical-safe",
+    "motion=pan"
+   ],
+   "peak": 2.7,
+   "level": "atrium"
+  },
+  "atrium_walk_01": {
+   "tags": [
+    "walk",
+    "clean",
+    "vertical-safe",
+    "motion=handheld"
+   ],
+   "level": "atrium"
+  },
+  "atrium_walk_02": {
+   "tags": [
+    "walk",
+    "clean",
+    "vertical-safe",
+    "motion=handheld"
+   ],
+   "level": "atrium"
+  },
+  "field_crane_01": {
+   "tags": [
+    "wide",
+    "clean",
+    "motion=dolly"
+   ],
+   "level": "field"
+  },
+  "field_dollyzoom_01": {
+   "tags": [
+    "wide",
+    "clean",
+    "vertical-safe",
+    "motion=dolly"
+   ],
+   "level": "field"
+  },
+  "field_glide_01": {
+   "tags": [
+    "wide",
+    "clean",
+    "motion=dolly"
+   ],
+   "level": "field"
+  },
+  "field_hero_01": {
+   "tags": [
+    "monster",
+    "clean",
+    "vertical-safe",
+    "motion=dolly"
+   ],
+   "peak": 3.0,
+   "level": "field"
+  },
+  "field_reveal_01": {
+   "tags": [
+    "monster",
+    "reveal",
+    "scare",
+    "clean",
+    "vertical-safe",
+    "motion=pan"
+   ],
+   "peak": 2.7,
+   "level": "field"
+  },
+  "field_scarecrow_approach_01": {
+   "tags": [
+    "monster",
+    "scare",
+    "clean",
+    "vertical-safe",
+    "motion=dolly"
+   ],
+   "peak": 7.2,
+   "level": "field"
+  },
+  "field_scarecrow_chase_01": {
+   "tags": [
+    "monster",
+    "chase",
+    "clean",
+    "vertical-safe",
+    "motion=handheld"
+   ],
+   "peak": 5.2,
+   "level": "field"
+  },
+  "field_walk_01": {
+   "tags": [
+    "walk",
+    "clean",
+    "vertical-safe",
+    "motion=handheld"
+   ],
+   "level": "field"
+  },
+  "halls_approach_01": {
+   "tags": [
+    "monster",
+    "scare",
+    "clean",
+    "vertical-safe",
+    "motion=dolly"
+   ],
+   "peak": 6.0,
+   "level": "halls"
+  },
+  "halls_approach_02": {
+   "tags": [
+    "monster",
+    "scare",
+    "clean",
+    "vertical-safe",
+    "motion=dolly"
+   ],
+   "peak": 6.0,
+   "level": "halls"
+  },
+  "halls_chase_01": {
+   "tags": [
+    "monster",
+    "chase",
+    "clean",
+    "vertical-safe",
+    "motion=handheld"
+   ],
+   "peak": 5.2,
+   "level": "halls"
+  },
+  "halls_dollyzoom_01": {
+   "tags": [
+    "wide",
+    "clean",
+    "vertical-safe",
+    "motion=dolly"
+   ],
+   "level": "halls"
+  },
+  "halls_flicker_scare_01": {
+   "tags": [
+    "monster",
+    "scare",
+    "flicker",
+    "clean",
+    "vertical-safe",
+    "motion=dolly"
+   ],
+   "peak": 6.8,
+   "level": "halls"
+  },
+  "halls_glide_01": {
+   "tags": [
+    "wide",
+    "clean",
+    "motion=dolly"
+   ],
+   "level": "halls"
+  },
+  "halls_glide_02": {
+   "tags": [
+    "wide",
+    "clean",
+    "motion=dolly"
+   ],
+   "level": "halls"
+  },
+  "halls_hero_01": {
+   "tags": [
+    "monster",
+    "clean",
+    "vertical-safe",
+    "motion=dolly"
+   ],
+   "peak": 3.0,
+   "level": "halls"
+  },
+  "halls_lightsdie_01": {
+   "tags": [
+    "scare",
+    "event",
+    "clean",
+    "vertical-safe",
+    "motion=handheld"
+   ],
+   "peak": 4,
+   "level": "halls"
+  },
+  "halls_reveal_01": {
+   "tags": [
+    "monster",
+    "reveal",
+    "scare",
+    "clean",
+    "vertical-safe",
+    "motion=pan"
+   ],
+   "peak": 2.7,
+   "level": "halls"
+  },
+  "halls_walk_01": {
+   "tags": [
+    "walk",
+    "clean",
+    "vertical-safe",
+    "motion=handheld"
+   ],
+   "level": "halls"
+  },
+  "halls_walk_02": {
+   "tags": [
+    "walk",
+    "clean",
+    "vertical-safe",
+    "motion=handheld"
+   ],
+   "level": "halls"
+  },
+  "hills_day_approach_01": {
+   "tags": [
+    "monster",
+    "scare",
+    "clean",
+    "vertical-safe",
+    "day",
+    "motion=dolly"
+   ],
+   "peak": 7.2,
+   "level": "hills"
+  },
+  "hills_day_crane_01": {
+   "tags": [
+    "wide",
+    "clean",
+    "day",
+    "motion=dolly"
+   ],
+   "level": "hills"
+  },
+  "hills_day_dollyzoom_01": {
+   "tags": [
+    "wide",
+    "clean",
+    "vertical-safe",
+    "day",
+    "motion=dolly"
+   ],
+   "level": "hills"
+  },
+  "hills_day_glide_01": {
+   "tags": [
+    "wide",
+    "clean",
+    "day",
+    "motion=dolly"
+   ],
+   "level": "hills"
+  },
+  "hills_day_hero_01": {
+   "tags": [
+    "monster",
+    "clean",
+    "vertical-safe",
+    "day",
+    "motion=dolly"
+   ],
+   "peak": 3.0,
+   "level": "hills"
+  },
+  "hills_day_walk_01": {
+   "tags": [
+    "walk",
+    "clean",
+    "vertical-safe",
+    "day",
+    "motion=handheld"
+   ],
+   "level": "hills"
+  },
+  "hills_night_approach_01": {
+   "tags": [
+    "monster",
+    "scare",
+    "clean",
+    "vertical-safe",
+    "night",
+    "motion=dolly"
+   ],
+   "peak": 7.2,
+   "level": "hills"
+  },
+  "hills_night_chase_01": {
+   "tags": [
+    "monster",
+    "chase",
+    "clean",
+    "vertical-safe",
+    "night",
+    "motion=handheld"
+   ],
+   "peak": 5.2,
+   "level": "hills"
+  },
+  "hills_night_hero_01": {
+   "tags": [
+    "monster",
+    "clean",
+    "vertical-safe",
+    "night",
+    "motion=dolly"
+   ],
+   "peak": 3.0,
+   "level": "hills"
+  },
+  "hills_night_reveal_01": {
+   "tags": [
+    "monster",
+    "reveal",
+    "scare",
+    "clean",
+    "vertical-safe",
+    "night",
+    "motion=pan"
+   ],
+   "peak": 2.7,
+   "level": "hills"
+  },
+  "hotel_dollyzoom_01": {
+   "tags": [
+    "wide",
+    "clean",
+    "vertical-safe",
+    "motion=dolly"
+   ],
+   "level": "hotel"
+  },
+  "hotel_flicker_scare_01": {
+   "tags": [
+    "monster",
+    "scare",
+    "flicker",
+    "clean",
+    "vertical-safe",
+    "motion=dolly"
+   ],
+   "peak": 6.8,
+   "level": "hotel"
+  },
+  "hotel_glide_01": {
+   "tags": [
+    "wide",
+    "clean",
+    "motion=dolly"
+   ],
+   "level": "hotel"
+  },
+  "hotel_hero_01": {
+   "tags": [
+    "monster",
+    "clean",
+    "vertical-safe",
+    "motion=dolly"
+   ],
+   "peak": 3.0,
+   "level": "hotel"
+  },
+  "hotel_hop_approach_01": {
+   "tags": [
+    "monster",
+    "scare",
+    "clean",
+    "vertical-safe",
+    "motion=dolly"
+   ],
+   "peak": 6.0,
+   "level": "hotel"
+  },
+  "hotel_hop_chase_01": {
+   "tags": [
+    "monster",
+    "chase",
+    "clean",
+    "vertical-safe",
+    "motion=handheld"
+   ],
+   "peak": 5.2,
+   "level": "hotel"
+  },
+  "hotel_lightsdie_01": {
+   "tags": [
+    "scare",
+    "event",
+    "clean",
+    "vertical-safe",
+    "motion=handheld"
+   ],
+   "peak": 3.5,
+   "level": "hotel"
+  },
+  "hotel_reveal_01": {
+   "tags": [
+    "monster",
+    "reveal",
+    "scare",
+    "clean",
+    "vertical-safe",
+    "motion=pan"
+   ],
+   "peak": 2.7,
+   "level": "hotel"
+  },
+  "hotel_walk_01": {
+   "tags": [
+    "walk",
+    "clean",
+    "vertical-safe",
+    "motion=handheld"
+   ],
+   "level": "hotel"
+  },
+  "hotel_walk_02": {
+   "tags": [
+    "walk",
+    "clean",
+    "vertical-safe",
+    "motion=handheld"
+   ],
+   "level": "hotel"
+  },
+  "library_approach_01": {
+   "tags": [
+    "monster",
+    "scare",
+    "clean",
+    "vertical-safe",
+    "motion=dolly"
+   ],
+   "peak": 6.0,
+   "level": "library"
+  },
+  "library_approach_02": {
+   "tags": [
+    "monster",
+    "scare",
+    "clean",
+    "vertical-safe",
+    "motion=dolly"
+   ],
+   "peak": 6.0,
+   "level": "library"
+  },
+  "library_bookfall_01": {
+   "tags": [
+    "scare",
+    "event",
+    "clean",
+    "vertical-safe",
+    "motion=handheld"
+   ],
+   "peak": 2.0,
+   "level": "library"
+  },
+  "library_chase_02": {
+   "tags": [
+    "monster",
+    "chase",
+    "clean",
+    "vertical-safe",
+    "motion=handheld"
+   ],
+   "peak": 5.2,
+   "level": "library"
+  },
+  "library_dollyzoom_01": {
+   "tags": [
+    "wide",
+    "clean",
+    "vertical-safe",
+    "motion=dolly"
+   ],
+   "level": "library"
+  },
+  "library_flicker_scare_01": {
+   "tags": [
+    "monster",
+    "scare",
+    "flicker",
+    "clean",
+    "vertical-safe",
+    "motion=dolly"
+   ],
+   "peak": 6.8,
+   "level": "library"
+  },
+  "library_glide_01": {
+   "tags": [
+    "wide",
+    "clean",
+    "motion=dolly"
+   ],
+   "level": "library"
+  },
+  "library_hero_02": {
+   "tags": [
+    "monster",
+    "clean",
+    "vertical-safe",
+    "motion=dolly"
+   ],
+   "peak": 3.0,
+   "level": "library"
+  },
+  "library_reveal_01": {
+   "tags": [
+    "monster",
+    "reveal",
+    "scare",
+    "clean",
+    "vertical-safe",
+    "motion=pan"
+   ],
+   "peak": 1.0,
+   "level": "library"
+  },
+  "library_walk_01": {
+   "tags": [
+    "walk",
+    "clean",
+    "vertical-safe",
+    "motion=handheld"
+   ],
+   "level": "library"
+  },
+  "playplace_approach_01": {
+   "tags": [
+    "monster",
+    "scare",
+    "clean",
+    "vertical-safe",
+    "motion=dolly"
+   ],
+   "peak": 6.0,
+   "level": "playplace"
+  },
+  "playplace_chase_01": {
+   "tags": [
+    "monster",
+    "chase",
+    "clean",
+    "vertical-safe",
+    "motion=handheld"
+   ],
+   "peak": 3.2,
+   "level": "playplace"
+  },
+  "playplace_flicker_scare_01": {
+   "tags": [
+    "monster",
+    "scare",
+    "flicker",
+    "clean",
+    "vertical-safe",
+    "motion=dolly"
+   ],
+   "peak": 6.8,
+   "level": "playplace"
+  },
+  "playplace_glide_01": {
+   "tags": [
+    "wide",
+    "clean",
+    "motion=dolly"
+   ],
+   "level": "playplace"
+  },
+  "playplace_hero_01": {
+   "tags": [
+    "monster",
+    "clean",
+    "vertical-safe",
+    "motion=dolly"
+   ],
+   "peak": 3.0,
+   "level": "playplace"
+  },
+  "playplace_reveal_01": {
+   "tags": [
+    "monster",
+    "reveal",
+    "scare",
+    "clean",
+    "vertical-safe",
+    "motion=pan"
+   ],
+   "peak": 2.7,
+   "level": "playplace"
+  },
+  "playplace_walk_01": {
+   "tags": [
+    "walk",
+    "clean",
+    "vertical-safe",
+    "motion=handheld"
+   ],
+   "level": "playplace"
+  },
+  "pool_approach_01": {
+   "tags": [
+    "monster",
+    "scare",
+    "clean",
+    "vertical-safe",
+    "motion=dolly"
+   ],
+   "peak": 6.0,
+   "level": "pool"
+  },
+  "pool_approach_02": {
+   "tags": [
+    "monster",
+    "scare",
+    "clean",
+    "vertical-safe",
+    "motion=dolly"
+   ],
+   "peak": 7.2,
+   "level": "pool"
+  },
+  "pool_crane_01": {
+   "tags": [
+    "wide",
+    "clean",
+    "motion=dolly"
+   ],
+   "level": "pool"
+  },
+  "pool_dollyzoom_01": {
+   "tags": [
+    "wide",
+    "clean",
+    "vertical-safe",
+    "motion=dolly"
+   ],
+   "level": "pool"
+  },
+  "pool_glide_01": {
+   "tags": [
+    "wide",
+    "clean",
+    "motion=dolly"
+   ],
+   "level": "pool"
+  },
+  "pool_hero_02": {
+   "tags": [
+    "monster",
+    "clean",
+    "vertical-safe",
+    "motion=dolly"
+   ],
+   "peak": 3.0,
+   "level": "pool"
+  },
+  "pool_reveal_02": {
+   "tags": [
+    "monster",
+    "reveal",
+    "scare",
+    "clean",
+    "vertical-safe",
+    "motion=pan"
+   ],
+   "peak": 2.7,
+   "level": "pool"
+  },
+  "pool_swimmer_rise_02": {
+   "tags": [
+    "monster",
+    "scare",
+    "reveal",
+    "clean",
+    "vertical-safe",
+    "motion=dolly"
+   ],
+   "peak": 4.2,
+   "level": "pool"
+  },
+  "pool_wade_approach_02": {
+   "tags": [
+    "monster",
+    "scare",
+    "clean",
+    "vertical-safe",
+    "motion=dolly"
+   ],
+   "peak": 7.2,
+   "level": "pool"
+  },
+  "pool_walk_01": {
+   "tags": [
+    "walk",
+    "clean",
+    "vertical-safe",
+    "motion=handheld"
+   ],
+   "level": "pool"
+  },
+  "pool_walk_02": {
+   "tags": [
+    "walk",
+    "clean",
+    "vertical-safe",
+    "motion=handheld"
+   ],
+   "level": "pool"
+  },
+  "school_approach_02": {
+   "tags": [
+    "monster",
+    "scare",
+    "clean",
+    "vertical-safe",
+    "motion=dolly"
+   ],
+   "peak": 7.2,
+   "level": "school"
+  },
+  "school_chase_01": {
+   "tags": [
+    "monster",
+    "chase",
+    "clean",
+    "vertical-safe",
+    "motion=handheld"
+   ],
+   "peak": 5.2,
+   "level": "school"
+  },
+  "school_dollyzoom_01": {
+   "tags": [
+    "wide",
+    "clean",
+    "vertical-safe",
+    "motion=dolly"
+   ],
+   "level": "school"
+  },
+  "school_flicker_scare_01": {
+   "tags": [
+    "monster",
+    "scare",
+    "flicker",
+    "clean",
+    "vertical-safe",
+    "motion=dolly"
+   ],
+   "peak": 6.8,
+   "level": "school"
+  },
+  "school_glide_01": {
+   "tags": [
+    "wide",
+    "clean",
+    "motion=dolly"
+   ],
+   "level": "school"
+  },
+  "school_hero_01": {
+   "tags": [
+    "monster",
+    "clean",
+    "vertical-safe",
+    "motion=dolly"
+   ],
+   "peak": 3.0,
+   "level": "school"
+  },
+  "school_hero_02": {
+   "tags": [
+    "monster",
+    "clean",
+    "vertical-safe",
+    "motion=dolly"
+   ],
+   "peak": 3.0,
+   "level": "school"
+  },
+  "school_reveal_01": {
+   "tags": [
+    "monster",
+    "reveal",
+    "scare",
+    "clean",
+    "vertical-safe",
+    "motion=pan"
+   ],
+   "peak": 2.7,
+   "level": "school"
+  },
+  "school_walk_01": {
+   "tags": [
+    "walk",
+    "clean",
+    "vertical-safe",
+    "motion=handheld"
+   ],
+   "level": "school"
+  },
+  "school_walk_02": {
+   "tags": [
+    "walk",
+    "clean",
+    "vertical-safe",
+    "motion=handheld"
+   ],
+   "level": "school"
+  },
+  "subway_chase_02": {
+   "tags": [
+    "monster",
+    "chase",
+    "clean",
+    "vertical-safe",
+    "motion=handheld"
+   ],
+   "peak": 5.2,
+   "level": "subway"
+  },
+  "subway_conductor_approach_01": {
+   "tags": [
+    "monster",
+    "scare",
+    "clean",
+    "vertical-safe",
+    "motion=dolly"
+   ],
+   "peak": 7.2,
+   "level": "subway"
+  },
+  "subway_flicker_scare_01": {
+   "tags": [
+    "monster",
+    "scare",
+    "flicker",
+    "clean",
+    "vertical-safe",
+    "motion=dolly"
+   ],
+   "peak": 6.8,
+   "level": "subway"
+  },
+  "subway_glide_01": {
+   "tags": [
+    "wide",
+    "clean",
+    "motion=dolly"
+   ],
+   "level": "subway"
+  },
+  "subway_lantern_hero_01": {
+   "tags": [
+    "monster",
+    "clean",
+    "vertical-safe",
+    "motion=dolly"
+   ],
+   "peak": 3.0,
+   "level": "subway"
+  },
+  "subway_platform_wide_01": {
+   "tags": [
+    "wide",
+    "clean",
+    "motion=dolly"
+   ],
+   "level": "subway"
+  },
+  "subway_reveal_01": {
+   "tags": [
+    "monster",
+    "reveal",
+    "scare",
+    "clean",
+    "vertical-safe",
+    "motion=pan"
+   ],
+   "peak": 1.0,
+   "level": "subway"
+  },
+  "subway_walk_01": {
+   "tags": [
+    "walk",
+    "clean",
+    "vertical-safe",
+    "motion=handheld"
+   ],
+   "level": "subway"
+  },
+  "subway_walk_02": {
+   "tags": [
+    "walk",
+    "clean",
+    "vertical-safe",
+    "motion=handheld"
+   ],
+   "level": "subway"
+  },
+  "train_approach_01": {
+   "tags": [
+    "monster",
+    "clean",
+    "vertical-safe",
+    "motion=dolly"
+   ],
+   "peak": 7.2,
+   "level": "train"
+  },
+  "train_chase_01": {
+   "tags": [
+    "monster",
+    "chase",
+    "clean",
+    "vertical-safe",
+    "motion=handheld"
+   ],
+   "peak": 5.2,
+   "level": "train"
+  },
+  "train_dollyzoom_01": {
+   "tags": [
+    "wide",
+    "clean",
+    "vertical-safe",
+    "motion=dolly"
+   ],
+   "level": "train"
+  },
+  "train_glide_01": {
+   "tags": [
+    "wide",
+    "clean",
+    "motion=dolly"
+   ],
+   "level": "train"
+  },
+  "train_hero_01": {
+   "tags": [
+    "monster",
+    "clean",
+    "vertical-safe",
+    "motion=dolly"
+   ],
+   "peak": 3.0,
+   "level": "train"
+  },
+  "train_reveal_01": {
+   "tags": [
+    "monster",
+    "reveal",
+    "scare",
+    "clean",
+    "vertical-safe",
+    "motion=pan"
+   ],
+   "peak": 2.7,
+   "level": "train"
+  },
+  "train_walk_01": {
+   "tags": [
+    "walk",
+    "clean",
+    "vertical-safe",
+    "motion=handheld"
+   ],
+   "level": "train"
+  },
+  "train_walk_02": {
+   "tags": [
+    "walk",
+    "clean",
+    "vertical-safe",
+    "motion=handheld"
+   ],
+   "level": "train"
+  },
+  "tunnels_approach_01": {
+   "tags": [
+    "monster",
+    "scare",
+    "clean",
+    "vertical-safe",
+    "motion=dolly"
+   ],
+   "peak": 6.0,
+   "level": "tunnels"
+  },
+  "tunnels_approach_02": {
+   "tags": [
+    "monster",
+    "scare",
+    "clean",
+    "vertical-safe",
+    "motion=dolly"
+   ],
+   "peak": 6.0,
+   "level": "tunnels"
+  },
+  "tunnels_chase_01": {
+   "tags": [
+    "monster",
+    "chase",
+    "clean",
+    "vertical-safe",
+    "motion=handheld"
+   ],
+   "peak": 5.2,
+   "level": "tunnels"
+  },
+  "tunnels_chase_02": {
+   "tags": [
+    "monster",
+    "chase",
+    "clean",
+    "vertical-safe",
+    "motion=handheld"
+   ],
+   "peak": 5.2,
+   "level": "tunnels"
+  },
+  "tunnels_flicker_scare_01": {
+   "tags": [
+    "monster",
+    "scare",
+    "flicker",
+    "clean",
+    "vertical-safe",
+    "motion=dolly"
+   ],
+   "peak": 6.8,
+   "level": "tunnels"
+  },
+  "tunnels_glide_02": {
+   "tags": [
+    "wide",
+    "clean",
+    "motion=dolly"
+   ],
+   "level": "tunnels"
+  },
+  "tunnels_hero_01": {
+   "tags": [
+    "monster",
+    "clean",
+    "vertical-safe",
+    "motion=dolly"
+   ],
+   "peak": 2.0,
+   "level": "tunnels"
+  },
+  "tunnels_hero_02": {
+   "tags": [
+    "monster",
+    "clean",
+    "vertical-safe",
+    "motion=dolly"
+   ],
+   "peak": 3.0,
+   "level": "tunnels"
+  },
+  "tunnels_reveal_01": {
+   "tags": [
+    "monster",
+    "reveal",
+    "scare",
+    "clean",
+    "vertical-safe",
+    "motion=pan"
+   ],
+   "peak": 2.7,
+   "level": "tunnels"
+  },
+  "tunnels_walk_02": {
+   "tags": [
+    "walk",
+    "clean",
+    "vertical-safe",
+    "motion=handheld"
+   ],
+   "level": "tunnels"
+  },
+  "tunnels_walk_03": {
+   "tags": [
+    "walk",
+    "clean",
+    "vertical-safe",
+    "motion=handheld"
+   ],
+   "level": "tunnels"
+  },
+  "windows_approach_01": {
+   "tags": [
+    "monster",
+    "scare",
+    "clean",
+    "vertical-safe",
+    "motion=dolly"
+   ],
+   "peak": 7.2,
+   "level": "windows"
+  },
+  "windows_chase_01": {
+   "tags": [
+    "monster",
+    "chase",
+    "clean",
+    "vertical-safe",
+    "motion=handheld"
+   ],
+   "peak": 3.2,
+   "level": "windows"
+  },
+  "windows_crane_02": {
+   "tags": [
+    "wide",
+    "clean",
+    "motion=dolly"
+   ],
+   "level": "windows"
+  },
+  "windows_dollyzoom_01": {
+   "tags": [
+    "wide",
+    "clean",
+    "vertical-safe",
+    "motion=dolly"
+   ],
+   "level": "windows"
+  },
+  "windows_flicker_scare_01": {
+   "tags": [
+    "monster",
+    "scare",
+    "flicker",
+    "clean",
+    "vertical-safe",
+    "motion=dolly"
+   ],
+   "peak": 6.8,
+   "level": "windows"
+  },
+  "windows_glide_01": {
+   "tags": [
+    "wide",
+    "clean",
+    "motion=dolly"
+   ],
+   "level": "windows"
+  },
+  "windows_hero_01": {
+   "tags": [
+    "monster",
+    "clean",
+    "vertical-safe",
+    "motion=dolly"
+   ],
+   "peak": 3.0,
+   "level": "windows"
+  },
+  "windows_reveal_01": {
+   "tags": [
+    "monster",
+    "reveal",
+    "scare",
+    "clean",
+    "vertical-safe",
+    "motion=pan"
+   ],
+   "peak": 2.7,
+   "level": "windows"
+  },
+  "windows_walk_01": {
+   "tags": [
+    "walk",
+    "clean",
+    "vertical-safe",
+    "motion=handheld"
+   ],
+   "level": "windows"
+  }
+ }
+}

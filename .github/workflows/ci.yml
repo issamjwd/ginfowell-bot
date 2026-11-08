@@ -1,0 +1,54 @@
+# Tests on pull requests and on pushes to main, only when code changed. Never touches YouTube.
+# Feature-branch pushes start nothing (open a PR, or run `python -m pytest` locally): every push used to start a
+# ~2-3 minute job, about 270 of the 2,000 free minutes a month (2026-11-06). The episode workflow's make job also runs
+# the safety tests before every episode. The bot's own ledger commits are pushed with the workflow token, which never
+# starts a run; state/ is ignored here anyway.
+name: ci
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:   # docs and the ledger only
+      - "**.md"
+      - "docs/**"
+      - "state/**"
+  pull_request:
+    paths-ignore:
+      - "**.md"
+      - "docs/**"
+      - "state/**"
+
+permissions:
+  contents: read
+
+# a newer push to the same PR cancels its older test run instead of paying for both (main keeps every run)
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b # v5.3.0
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements*.txt
+      - name: ffmpeg (skips the slow apt update unless the install fails)
+        timeout-minutes: 6
+        run: |
+          inst() { sudo timeout 150 apt-get -o DPkg::Lock::Timeout=60 install -y -q --no-install-recommends ffmpeg; }
+          inst || { sudo timeout 150 apt-get -o DPkg::Lock::Timeout=60 update -q && inst; }
+      - name: Python packages (hash-locked when requirements.lock.txt exists)
+        run: |
+          if [ -f requirements.lock.txt ]; then
+            pip install --require-hashes --no-deps -r requirements.lock.txt && pip install pytest==8.3.3
+          else
+            pip install -r requirements-dev.txt
+          fi
+      - run: python -m pytest

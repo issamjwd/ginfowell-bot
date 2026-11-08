@@ -1,0 +1,7 @@
+{
+  "_note": "Allow-list for the optional AI video plug-in. Empty lists = the plug-in stays off for that provider. 'api' = hosts the bot may call (must include AI_VIDEO_ENDPOINT's host); 'media' = hosts the finished video may be downloaded from. Fill these from the provider's official API docs, in a reviewed commit on main.",
+  "providers": {
+    "higgsfield": {"api": [], "media": []},
+    "generic": {"api": [], "media": []}
+  }
+}

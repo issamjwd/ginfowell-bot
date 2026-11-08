@@ -1,0 +1,236 @@
+{
+ "_comment": "Real music for the ginfowell Shorts (upbeat, curious) (bot/music.py library_bed). Files live in the GitHub release music-v1 (downloaded by the workflow into music/); each track is credited in the video description as its licence asks. Kevin MacLeod, incompetech.com, CC BY 4.0. Add tracks: upload to the release, add a line here.",
+ "credit": "\"{title}\" Kevin MacLeod (incompetech.com). Licensed under Creative Commons: By Attribution 4.0. http://creativecommons.org/licenses/by/4.0/",
+ "tracks": [
+  {
+   "file": "local_forecast_elevator.opus",
+   "title": "Local Forecast - Elevator",
+   "mood": "soft"
+  },
+  {
+   "file": "carefree.opus",
+   "title": "Carefree",
+   "mood": "soft"
+  },
+  {
+   "file": "wallpaper.opus",
+   "title": "Wallpaper",
+   "mood": "soft"
+  },
+  {
+   "file": "sneaky_snitch.opus",
+   "title": "Sneaky Snitch",
+   "mood": "soft"
+  },
+  {
+   "file": "investigations.opus",
+   "title": "Investigations",
+   "mood": "soft"
+  },
+  {
+   "file": "fluffing_a_duck.opus",
+   "title": "Fluffing a Duck",
+   "mood": "soft"
+  },
+  {
+   "file": "monkeys_spinning_monkeys.opus",
+   "title": "Monkeys Spinning Monkeys",
+   "mood": "soft"
+  },
+  {
+   "file": "pixel_peeker_polka_faster.opus",
+   "title": "Pixel Peeker Polka - faster",
+   "mood": "soft"
+  },
+  {
+   "file": "merry_go.opus",
+   "title": "Merry Go",
+   "mood": "soft"
+  },
+  {
+   "file": "inspired.opus",
+   "title": "Inspired",
+   "mood": "soft"
+  },
+  {
+   "file": "easy_lemon.opus",
+   "title": "Easy Lemon",
+   "mood": "soft"
+  },
+  {
+   "file": "life_of_riley.opus",
+   "title": "Life of Riley",
+   "mood": "soft"
+  },
+  {
+   "file": "hidden_agenda.opus",
+   "title": "Hidden Agenda",
+   "mood": "soft"
+  },
+  {
+   "file": "thinking_music.opus",
+   "title": "Thinking Music",
+   "mood": "soft"
+  },
+  {
+   "file": "airport_lounge.opus",
+   "title": "Airport Lounge",
+   "mood": "soft"
+  },
+  {
+   "file": "bossa_antigua.opus",
+   "title": "Bossa Antigua",
+   "mood": "soft"
+  },
+  {
+   "file": "amazing_plan.opus",
+   "title": "Amazing Plan",
+   "mood": "soft"
+  },
+  {
+   "file": "sovereign.opus",
+   "title": "Sovereign",
+   "mood": "soft"
+  },
+  {
+   "file": "funkorama.opus",
+   "title": "Funkorama",
+   "mood": "soft"
+  },
+  {
+   "file": "daily_beetle.opus",
+   "title": "Daily Beetle",
+   "mood": "soft"
+  },
+  {
+   "file": "cut_and_run.opus",
+   "title": "Cut and Run",
+   "mood": "soft"
+  },
+  {
+   "file": "off_to_osaka.opus",
+   "title": "Off to Osaka",
+   "mood": "soft"
+  },
+  {
+   "file": "beachfront_celebration.opus",
+   "title": "Beachfront Celebration",
+   "mood": "soft"
+  },
+  {
+   "file": "sunshine_a.opus",
+   "title": "Sunshine A",
+   "mood": "soft"
+  },
+  {
+   "file": "quirky_dog.opus",
+   "title": "Quirky Dog",
+   "mood": "soft"
+  },
+  {
+   "file": "scheming_weasel_faster.opus",
+   "title": "Scheming Weasel faster",
+   "mood": "soft"
+  },
+  {
+   "file": "wholesome.opus",
+   "title": "Wholesome",
+   "mood": "soft"
+  },
+  {
+   "file": "lobby_time.opus",
+   "title": "Lobby Time",
+   "mood": "soft"
+  },
+  {
+   "file": "arcadia.opus",
+   "title": "Arcadia",
+   "mood": "soft"
+  },
+  {
+   "file": "brightly_fancy.opus",
+   "title": "Brightly Fancy",
+   "mood": "soft"
+  },
+  {
+   "file": "hyperfun.opus",
+   "title": "Hyperfun",
+   "mood": "soft"
+  },
+  {
+   "file": "happy_boy_theme.opus",
+   "title": "Happy Boy Theme",
+   "mood": "soft"
+  },
+  {
+   "file": "dances_and_dames.opus",
+   "title": "Dances and Dames",
+   "mood": "soft"
+  },
+  {
+   "file": "rollin_at_5.opus",
+   "title": "Rollin at 5",
+   "mood": "soft"
+  },
+  {
+   "file": "groove_grove.opus",
+   "title": "Groove Grove",
+   "mood": "soft"
+  },
+  {
+   "file": "blippy_trance.opus",
+   "title": "Blippy Trance",
+   "mood": "soft"
+  },
+  {
+   "file": "hep_cats.opus",
+   "title": "Hep Cats",
+   "mood": "soft"
+  },
+  {
+   "file": "ether_vox.opus",
+   "title": "Ether Vox",
+   "mood": "soft"
+  },
+  {
+   "file": "galactic_rap.opus",
+   "title": "Galactic Rap",
+   "mood": "soft"
+  },
+  {
+   "file": "space_fighter_loop.opus",
+   "title": "Space Fighter Loop",
+   "mood": "soft"
+  },
+  {
+   "file": "voxel_revolution.opus",
+   "title": "Voxel Revolution",
+   "mood": "soft"
+  },
+  {
+   "file": "cloud_dancer.opus",
+   "title": "Cloud Dancer",
+   "mood": "soft"
+  },
+  {
+   "file": "night_vigil.opus",
+   "title": "Night Vigil",
+   "mood": "soft"
+  },
+  {
+   "file": "enchanted_valley.opus",
+   "title": "Enchanted Valley",
+   "mood": "soft"
+  },
+  {
+   "file": "celtic_impulse.opus",
+   "title": "Celtic Impulse",
+   "mood": "soft"
+  },
+  {
+   "file": "frost_waltz.opus",
+   "title": "Frost Waltz",
+   "mood": "soft"
+  }
+ ]
+}

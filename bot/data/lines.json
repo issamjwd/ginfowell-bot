@@ -1,0 +1,96 @@
+{
+  "_note": "Caption bank. lowercase, gentle, short; sad and quietly scary, never gory. Say 'dreams', never 'rooms'. Placeholders: {dream} (dream name), {detail} (the dream's detail line), {count} (number of dreams, from dreams.json), {monster} (the cast name in lowercase words). Max 60 characters after filling. The planner never reuses the same (template, dream, monster, lines) combination and avoids lines used in the last 6 episodes.",
+  "hook": [
+    "pov: you fell asleep",
+    "pov: you woke up in {dream}",
+    "you've been here before.",
+    "you fell asleep in the waiting room.",
+    "you open your eyes somewhere soft.",
+    "this is {dream}.",
+    "nobody else is here. probably.",
+    "you remember this place.",
+    "it's quiet in {dream}.",
+    "you don't remember falling asleep."
+  ],
+  "middle": [
+    "{detail}.",
+    "find what you forgot.",
+    "three little lights. three memories.",
+    "walk slowly. it listens.",
+    "it only knows what it can see.",
+    "keep your flashlight low.",
+    "it's softer than you remember.",
+    "somewhere, a clock is ticking.",
+    "you could stay a little longer.",
+    "don't run. it hears running.",
+    "every dream asks for something."
+  ],
+  "turn": [
+    "don't stare too long.",
+    "it noticed you.",
+    "something in this dream noticed you.",
+    "it was here the whole time.",
+    "it's closer than it was.",
+    "you weren't alone.",
+    "it remembers you too.",
+    "don't look back."
+  ],
+  "memory": [
+    "a memory, glowing in the dark.",
+    "you remember a birthday.",
+    "someone used to hum this song.",
+    "it smells like home here.",
+    "you remember a hand holding yours."
+  ],
+  "night": [
+    "the lamps are safe.",
+    "stay where it's warm.",
+    "the lights went out on the hills.",
+    "it only comes at night."
+  ],
+  "outro": [
+    "fall asleep. remember. wake up.",
+    "{count} dreams. one way home.",
+    "try to wake up.",
+    "good night.",
+    "see you in the next dream."
+  ],
+  "wave": [
+    "it waved first.",
+    "don't wave back.",
+    "it's still waving.",
+    "it waves a little faster now."
+  ],
+  "rules": [
+    "never stare back.",
+    "don't run in the halls.",
+    "stay where it's warm.",
+    "don't wave back.",
+    "keep the lamps on.",
+    "count the doors twice.",
+    "never sleep twice.",
+    "don't answer the knock.",
+    "walk. never run.",
+    "if it smiles, leave.",
+    "don't follow the light.",
+    "close your eyes slowly."
+  ],
+  "pov": [
+    "pov: you can't wake up",
+    "pov: the halls never end",
+    "pov: something is following",
+    "pov: you heard a door",
+    "pov: the lights flicker",
+    "pov: you're not alone",
+    "pov: it's too quiet"
+  ],
+  "cold": [
+    "it saw you first.",
+    "don't look.",
+    "too late.",
+    "it's awake.",
+    "it found you.",
+    "run.",
+    "it's behind you."
+  ]
+}

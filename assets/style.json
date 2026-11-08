@@ -1,0 +1,34 @@
+{
+  "_comment": "The one place for on-screen text fonts, colours and caption layout. Read by bot/style.py (Pillow captions, cards, fallback path) and render/render.mjs (Remotion overlay). Two fonts, one accent.",
+  "fonts": {
+    "head": {
+      "family": "liminality-head",
+      "files": [
+        "EBGaramond.ttf",
+        "Merriweather-Regular.ttf"
+      ],
+      "weight": "400"
+    },
+    "body": {
+      "family": "liminality-body",
+      "files": {
+        "500": "Montserrat-Medium.ttf",
+        "700": "Montserrat-Bold.ttf"
+      }
+    }
+  },
+  "colours": {
+    "ink": "#17131D",
+    "paper": "#F6F1EA",
+    "sub": "#C8C4BE",
+    "accent": "#F2A7C3"
+  },
+  "caption": {
+    "y": 0.6,
+    "max_width": 0.78,
+    "size": 128,
+    "line_height": 140,
+    "nudge_left": 30,
+    "left": 84
+  }
+}

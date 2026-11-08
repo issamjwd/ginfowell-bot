@@ -1,0 +1,7 @@
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.blend binary
+*.woff2 binary
+*.mp4 binary
+state/episodes.jsonl merge=union

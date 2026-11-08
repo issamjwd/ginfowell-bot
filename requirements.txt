@@ -1,0 +1,5 @@
+# Runtime for the "make" job (Python 3.12). Exact pins. When requirements.lock.txt exists (made by the
+# lock-deps workflow, reviewed and committed by the owner), CI installs THAT with --require-hashes instead.
+numpy==2.1.3
+pillow==11.0.0
+scipy==1.14.1

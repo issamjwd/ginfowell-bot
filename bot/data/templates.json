@@ -1,0 +1,96 @@
+{
+  "_note": "Which templates the planner may pick (weight). enabled=false retires one. Live templates are the footage edit styles in bot/edits.py (owner feedback 2026-11-04: cuts every 1-2.5 s, scare cold open, big text, no stills). The older templates are retired: their long holds and still drawings did not meet the bar. Rotation: never the same template twice in a row or twice a day (bot/variety.py).",
+  "templates": [
+    {
+      "id": "dream_tour",
+      "format": "footage",
+      "weight": 3,
+      "enabled": false,
+      "about": "beat-cut tour of 4-5 dreams, captions, impact frame on the last cut (retired 2026-11-04: long holds / still drawings; see bot/edits.py)"
+    },
+    {
+      "id": "one_dream",
+      "format": "footage",
+      "weight": 2,
+      "enabled": false,
+      "about": "one dream, three angles, a quiet detail, then the turn (retired 2026-11-04: long holds / still drawings; see bot/edits.py)"
+    },
+    {
+      "id": "did_you_see_it",
+      "format": "footage",
+      "weight": 2,
+      "enabled": false,
+      "about": "a clip, a freeze, a drawn impact-frame zoom: did you see it? (retired 2026-11-04: long holds / still drawings; see bot/edits.py)"
+    },
+    {
+      "id": "dont_stare",
+      "format": "animated",
+      "weight": 3,
+      "enabled": false,
+      "about": "the dreamer walks; the dream's monster is behind them; impact frame reveal (retired 2026-11-04: long holds / still drawings; see bot/edits.py)"
+    },
+    {
+      "id": "memory_light",
+      "format": "animated",
+      "weight": 2,
+      "enabled": false,
+      "about": "gentle: the dreamer reaches for a memory; something peeks at the edge (retired 2026-11-04: long holds / still drawings; see bot/edits.py)"
+    },
+    {
+      "id": "it_waves_back",
+      "format": "animated",
+      "weight": 2,
+      "enabled": false,
+      "about": "dusk on the hills: the neighbour waves, the dreamer waves back, it waves faster (retired 2026-11-04: long holds / still drawings; see bot/edits.py)"
+    },
+    {
+      "id": "fell_asleep",
+      "format": "animated",
+      "weight": 2,
+      "enabled": false,
+      "about": "the dreamer sits; dreams swap on the beat behind them; a reach toward camera (retired 2026-11-04: long holds / still drawings; see bot/edits.py)"
+    },
+    {
+      "id": "chase_cut",
+      "format": "footage",
+      "weight": 3,
+      "enabled": true,
+      "about": "fast 1-1.5 s cuts, whips, shakes, slam captions"
+    },
+    {
+      "id": "slow_dread",
+      "format": "footage",
+      "weight": 2,
+      "enabled": true,
+      "about": "2.5 s shots, fades, slow push-ins, rising captions"
+    },
+    {
+      "id": "found_footage",
+      "format": "footage",
+      "weight": 2,
+      "enabled": true,
+      "about": "VHS tape look, handheld wobble, hard cuts"
+    },
+    {
+      "id": "rules_list",
+      "format": "footage",
+      "weight": 2,
+      "enabled": true,
+      "about": "rules of the dream, numbered over the montage"
+    },
+    {
+      "id": "monster_reveal",
+      "format": "footage",
+      "weight": 2,
+      "enabled": true,
+      "about": "cold open, calm dreams, then the hard reveal"
+    },
+    {
+      "id": "pov_walk",
+      "format": "footage",
+      "weight": 2,
+      "enabled": true,
+      "about": "forward push-ins like walking, pov captions"
+    }
+  ]
+}

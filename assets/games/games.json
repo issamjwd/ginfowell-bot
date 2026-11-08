@@ -1,0 +1,71 @@
+{
+ "_comment": "Game spotlight Shorts (bot/world.py plan_game): name, Roblox link, pitch + facts read by the narrator; screenshots in assets/games/<id>/NN.jpg. Only published games with a url are used.",
+ "cloudbreak": {
+  "name": "Cloudbreak Couriers",
+  "url": "https://www.roblox.com/games/124982509316987/Cloudbreak-Couriers",
+  "published": true,
+  "pitch": "Glide between floating islands and deliver parcels for the skyport.",
+  "facts": [
+   "Take courier jobs at Cloudbreak Skyport.",
+   "Glide through wind rings, updrafts and launch pads.",
+   "Deliver parcels, repair landmarks and rescue lost Cloudlings.",
+   "Earn Sky Tokens and Reputation to unlock new islands.",
+   "Co-op for up to 8 players.",
+   "Day and night cycle with lamps and fireflies."
+  ]
+ },
+ "listener": {
+  "name": "THE LISTENER",
+  "url": "https://www.roblox.com/games/86151369162018/THE-LISTENER",
+  "published": true,
+  "pitch": "Escape a night sanatorium from a monster that talks back.",
+  "facts": [
+   "Co-op horror escape for 1 to 6 players.",
+   "Restore power: fuses, generator, boiler valves, keycard, gate.",
+   "The antlered monster hunts by sight and sound.",
+   "Type to it and it answers out loud.",
+   "It only finds you by what it sees or hears.",
+   "Hide in lockers and lure it with bottles."
+  ]
+ },
+ "skysunder": {
+  "name": "SkySunder",
+  "url": "https://www.roblox.com/games/95266077686188/SkySunder",
+  "published": true,
+  "pitch": "Co-op sword combat against waves on pink sunset sky islands.",
+  "facts": [
+   "Co-op wave combat for 1 to 5 players.",
+   "Fight the Hollow with sword combos and Blink Strike.",
+   "Wall-run, dash and ground pound between hits.",
+   "Spend shards at the Rift Forge on upgrades."
+  ]
+ },
+ "warlines": {
+  "name": "WarLines",
+  "url": "https://www.roblox.com/games/114554690852475/WarLines",
+  "published": true,
+  "pitch": "Real-time territory war on a map of the real Earth.",
+  "facts": [
+   "Up to 25 players per server, plus AI nations.",
+   "Send troops into neutral or enemy land.",
+   "Grow gold and troops, build, sail and nuke.",
+   "Ally with other nations, or betray them.",
+   "Win by holding 80 percent of the land.",
+   "Play the World map or generated islands."
+  ]
+ },
+ "outofframe": {
+  "name": "Out of Frame",
+  "url": "https://www.roblox.com/games/132432208822600/Out-of-Frame",
+  "published": true,
+  "pitch": "Hide from a giant camera before it takes the photo.",
+  "facts": [
+   "Party hide-and-seek for 2 to 50 players.",
+   "The camera hears noise, turns, locks on and flashes.",
+   "Anyone visible in the photo is out.",
+   "Hide time shrinks with every photo taken.",
+   "Seven maps, including Classroom, Warehouse and Giant Bedroom.",
+   "Last player never photographed wins."
+  ]
+ }
+}

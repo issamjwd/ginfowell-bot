@@ -1,0 +1,20 @@
+{
+  "name": "pixelhelm-overlay",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Remotion text overlay for the liminality Shorts bot (called by bot/overlay.py)",
+  "scripts": {
+    "render": "node render.mjs"
+  },
+  "dependencies": {
+    "@remotion/bundler": "4.0.536",
+    "@remotion/cli": "4.0.536",
+    "@remotion/renderer": "4.0.536",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "remotion": "4.0.536"
+  },
+  "overrides": {
+    "zod": "4.6.7"
+  }
+}

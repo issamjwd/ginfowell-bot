@@ -1,0 +1,14 @@
+{
+  "repo": "google/fonts",
+  "commit": "2fe1e8c6b137fb13041a7cfca6fdcd8a910ea4dc",
+  "files": {
+    "EBGaramond.ttf": {
+      "path": "ofl/ebgaramond/EBGaramond[wght].ttf",
+      "sha256": "ef9512f92f6d579e5dc75af59a5a4b1b8b47d2eda89e00b954d44520e5369027"
+    },
+    "EBGaramond-Italic.ttf": {
+      "path": "ofl/ebgaramond/EBGaramond-Italic[wght].ttf",
+      "sha256": "bba2c4499c93c9612b90b9825d32b07da52fce2fe57562a1eb6b833553f93c4e"
+    }
+  }
+}

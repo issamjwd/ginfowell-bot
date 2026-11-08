@@ -1,0 +1,22 @@
+out/
+footage/
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+assets/sprites/cache/
+assets/fonts/EBGaramond*.ttf
+*.blend1
+.env
+*.secret
+client_secret*.json
+
+# Remotion overlay (render/): dependencies come from package-lock.json via npm ci --ignore-scripts
+node_modules/
+# local experiments and review stills, never committed
+lab/
+.profile-cache/
+
+music/
+voice/
+voice.sha256

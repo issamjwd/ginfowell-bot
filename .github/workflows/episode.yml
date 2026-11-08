@@ -1,0 +1,558 @@
+# Makes one Short and (only when switched on) posts it to the ginfowell channel (world Shorts only:
+# repo variable BOT_WORLD=only; no long video, its crons are removed). Runs on GitHub's computers, never on the owner's PC.
+#
+# Topics: the long video is always liminality. Shorts follow repo variable BOT_WORLD (bot/topic.py): "most"
+# (default: 3 of 4 Shorts are world Shorts about space, on-this-day history or nature, bot/world.py), "mix"
+# (alternate), "only" or "off". A world Short skips the footage, Blender and Remotion steps.
+# From 2026-12-01 the 10:19 cron is base Short slot 1 (4 base Shorts a day) and 23:29 the only extra (bot/slots.py).
+#
+# Schedule (UTC; the owner is UTC+3): 3 base Shorts every day at 13:07, 17:37 and 21:13, plus up to 2 EXTRA Shorts
+# at 10:19 and 23:29 that post only while the month's runner minutes fit (bot/budget.py, checked by the gate step
+# through the API: projected <= 1,850 of 2,000; an unreadable budget skips the extra, never a base Short); the long
+# video at 15:23 on the days in the repo variable LONG_DAYS (comma list of weekday numbers, 0 = Sunday ... 6 =
+# Saturday, no spaces, or "daily"; default "1,3,5" = Mon/Wed/Fri). A long-video slot on another day is skipped at
+# job level, which costs no runner minutes. Budget maths (GitHub Free, private repo: 2,000 minutes a month):
+# README.md "COSTS / LIMITS".
+#
+# Jobs and what each one is allowed to hold:
+#   make    read-only (contents: read; actions: read so the gate step can sum this month's billed minutes for the
+#           extra-Short budget); optional Claude / AI-video keys only (in the one step that needs them). Runs the tests first
+#           (one job instead of two saves a runner start-up per episode), then the third-party packages (numpy,
+#           Pillow, SciPy, Blender, the Remotion text overlay via Node + the runner's preinstalled Chrome). Never sees
+#           YouTube secrets or git write access.
+#   claim   git write, NO secrets, stdlib Python only: records + pushes the claim BEFORE any upload
+#   upload  environment "youtube" (main only; optional required reviewer), YouTube secrets, read-only checkout,
+#           stdlib Python only, no packages installed
+#   record  git write, NO secrets, stdlib Python only: records + pushes the result
+# Live posting needs: repo variable BOT_ENABLED = true, the YT_* secrets in the "youtube" environment, the main
+# branch, and (manual runs) dry_run unticked. Everything else is a dry run: the video is attached to the run.
+#
+# Actions are pinned to full commit SHAs (tag in the comment). If a run fails at "Set up job" with
+# "unable to resolve action", see SETUP.md "Troubleshooting".
+name: episode
+
+on:
+  schedule:
+    # GitHub's cron is best-effort (a run can be late or never start), so each slot has a backup later the same UTC
+    # day. The make job's first step (bot/slots.py) lets a run go on only if its slot is still open, so a backup is a
+    # ~1-minute no-op when the main cron fired, and catches it up when it did not.
+    - cron: "19 10 * * *"    # extra Short 1 (only when the month's minutes fit; no backup)
+    - cron: "7 13 * * *"     # Short slot 1
+    - cron: "49 13 * * *"    #   backup
+    - cron: "37 17 * * *"    # Short slot 2
+    - cron: "19 18 * * *"    #   backup
+    - cron: "13 21 * * *"    # Short slot 3
+    - cron: "29 23 * * *"    # extra Short 2 (minutes permitting) AND Short slot 3's backup (a missing base Short first)
+  workflow_dispatch:
+    inputs:
+      kind:
+        description: "Short (9:16) or the long video (16:9)"
+        type: choice
+        options: [short, long]
+        default: short
+      format:
+        description: "What to make"
+        type: choice
+        options: [auto, footage, animated]
+        default: auto
+      dry_run:
+        description: "Dry run (render only, never upload)"
+        type: boolean
+        default: true
+      template:
+        description: "Dry runs only: force this Short style (e.g. monster_reveal, world_space, world_history, world_nature); empty = the planner picks"
+        type: string
+        default: ""
+      topic:
+        description: "Shorts: liminality, a world Short (space / history), or auto (repo variable BOT_WORLD)"
+        type: choice
+        options: [auto, liminality, world]
+        default: auto
+
+permissions:
+  contents: read
+
+# One run per kind at a time: a second trigger of the same kind waits instead of racing the ledger, and a Short never
+# waits behind (or cancels) the long video. GitHub keeps only ONE waiting run per group (a third would replace it), so
+# the Shorts are 4+ hours apart and dry runs are dispatched one at a time. The two kinds may run side by side: ledger
+# pushes merge (state/episodes.jsonl is merge=union in .gitattributes) and retry.
+concurrency:
+  group: episode-${{ (startsWith(github.event.schedule, '23 15 ') || startsWith(github.event.schedule, '41 16 ') || inputs.kind == 'long') && 'long' || 'short' }}
+  cancel-in-progress: false
+
+env:
+  PYTHON_VERSION: "3.12"
+  NODE_VERSION: "22"
+  BLENDER_VERSION: "5.1.0"
+  BLENDER_SERIES: "5.1"
+  # sha256 of blender-5.1.0-linux-x64.tar.xz, copied by the owner from blender.org (SETUP.md step 11).
+  # Empty = Blender is never downloaded and animated shorts use the 12 seed sprites in the repo.
+  BLENDER_SHA256: "7f2475990613c8d4c7ac5697803fcf40d09541c1fd8c23936f4b07a169a920c7"
+
+jobs:
+  make:
+    # The long-video slot only runs on LONG_DAYS (skipped jobs cost nothing). Shorts and manual runs always run.
+    if: >-
+      github.event_name != 'schedule' ||
+      !(startsWith(github.event.schedule, '23 15 ') || startsWith(github.event.schedule, '41 16 ')) ||
+      vars.LONG_DAYS == 'daily' ||
+      (endsWith(github.event.schedule, ' 0') && contains(format(',{0},', vars.LONG_DAYS || '1,3,5'), ',0,')) ||
+      (endsWith(github.event.schedule, ' 1') && contains(format(',{0},', vars.LONG_DAYS || '1,3,5'), ',1,')) ||
+      (endsWith(github.event.schedule, ' 2') && contains(format(',{0},', vars.LONG_DAYS || '1,3,5'), ',2,')) ||
+      (endsWith(github.event.schedule, ' 3') && contains(format(',{0},', vars.LONG_DAYS || '1,3,5'), ',3,')) ||
+      (endsWith(github.event.schedule, ' 4') && contains(format(',{0},', vars.LONG_DAYS || '1,3,5'), ',4,')) ||
+      (endsWith(github.event.schedule, ' 5') && contains(format(',{0},', vars.LONG_DAYS || '1,3,5'), ',5,')) ||
+      (endsWith(github.event.schedule, ' 6') && contains(format(',{0},', vars.LONG_DAYS || '1,3,5'), ',6,'))
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      actions: read   # the gate step lists this month's runs + jobs to sum billed minutes (bot/budget.py); read-only
+    # measured: a Short's job ~4-5 min, the long video's ~10 min. Tight limits so a hang never burns free minutes.
+    timeout-minutes: ${{ (startsWith(github.event.schedule, '23 15 ') || startsWith(github.event.schedule, '41 16 ') || inputs.kind == 'long') && 60 || 25 }}
+    outputs:
+      live: ${{ steps.decide.outputs.live }}
+      privacy: ${{ steps.decide.outputs.privacy }}
+      slot_day: ${{ steps.gate.outputs.slot_day }}
+      extra: ${{ steps.gate.outputs.extra }}
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+
+      # the cheapest possible no-op: a slot that is already filled (or an extra without budget) stops here, ~15 s
+      - name: Slot still open? (scheduled runs only; reads main's NEWEST ledger; extra Shorts check the minute budget)
+        id: gate
+        env:
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
+          SCHEDULE: ${{ github.event.schedule }}
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          LONG_DAYS: ${{ vars.LONG_DAYS }}
+          LONG_SKIP: ${{ vars.LONG_SKIP }}   # dated days with no long video (bot/slots.py long_skip_days)
+        run: |
+          if [ "$GITHUB_EVENT_NAME" = "schedule" ]; then
+            curl -fsS --proto =https --retry 3 -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github.raw" \
+              "https://api.github.com/repos/$REPO/contents/state/episodes.jsonl?ref=main" -o "$RUNNER_TEMP/ledger.jsonl"
+            export BOT_LEDGER="$RUNNER_TEMP/ledger.jsonl"
+          fi
+          python3 -m bot.slots gate
+
+      - name: Decide dry run or live
+        if: steps.gate.outputs.run == 'true'
+        id: decide
+        env:
+          EVENT: ${{ github.event_name }}
+          REF: ${{ github.ref }}
+          INPUT_DRY: ${{ inputs.dry_run }}
+          INPUT_FORMAT: ${{ inputs.format }}
+          INPUT_KIND: ${{ inputs.kind }}
+          INPUT_TEMPLATE: ${{ inputs.template }}
+          SCHEDULE: ${{ github.event.schedule }}
+          ENABLED: ${{ vars.BOT_ENABLED }}
+          PRIVACY: ${{ vars.YT_PRIVACY }}
+        run: |
+          live=false
+          if [ "$ENABLED" = "true" ] && [ "$REF" = "refs/heads/main" ]; then
+            if [ "$EVENT" = "schedule" ]; then live=true; fi
+            if [ "$EVENT" = "workflow_dispatch" ] && [ "$INPUT_DRY" = "false" ]; then live=true; fi
+          fi
+          case "$INPUT_FORMAT" in footage|animated) fmt="$INPUT_FORMAT";; *) fmt=auto;; esac
+          case "$PRIVACY" in public|unlisted) priv="$PRIVACY";; *) priv=private;; esac
+          kind=short
+          case "$SCHEDULE" in "23 15 "*|"41 16 "*) kind=long;; esac
+          if [ "$EVENT" = "workflow_dispatch" ] && [ "$INPUT_KIND" = "long" ]; then kind=long; fi
+          echo "BOT_FORMAT=$fmt" >> "$GITHUB_ENV"
+          # a forced style is for reviewing dry runs only: never on a run that could post
+          # (a whole-string match: a multi-line value must never reach GITHUB_ENV)
+          if [ "$live" = "false" ] && [[ "$INPUT_TEMPLATE" =~ ^[a-z_]{1,40}$ ]]; then
+            echo "BOT_TEMPLATE=$INPUT_TEMPLATE" >> "$GITHUB_ENV"
+          fi
+          echo "BOT_KIND=$kind" >> "$GITHUB_ENV"
+          { echo "live=$live"; echo "privacy=$priv"; echo "kind=$kind"; } >> "$GITHUB_OUTPUT"
+          echo "live=$live kind=$kind format=$fmt privacy=$priv cores=$(nproc)" | tee -a "$GITHUB_STEP_SUMMARY"
+
+      # stdlib only, before any download: a world Short needs no footage, Blender or Remotion (fewer billed minutes)
+      - name: Topic (liminality or a world Short; repo variable BOT_WORLD = mix | only | off)
+        if: steps.gate.outputs.run == 'true'
+        id: topic
+        env:
+          BOT_WORLD: ${{ vars.BOT_WORLD }}
+          INPUT_TOPIC: ${{ inputs.topic }}
+        run: python3 -m bot.topic | tee -a "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b # v5.3.0
+        if: steps.gate.outputs.run == 'true'
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip            # wheels come from the cache; the hash lock still checks every one
+          cache-dependency-path: requirements*.txt
+
+      # ffmpeg's ~87 Ubuntu packages (~62 MB) come from GitHub's cache when they can: the Azure apt mirror is sometimes
+      # slow to a crawl (dry run 42236495899 got 61 MB at ~50 kB/s and lost 6 billed minutes to the step timeout).
+      # apt still checks every cached .deb against the signed package lists; anything missing or newer is downloaded.
+      - name: Restore ffmpeg's .deb files
+        if: steps.gate.outputs.run == 'true'
+        id: apt-cache
+        continue-on-error: true
+        uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        with:
+          path: ~/apt-debs
+          key: apt-ffmpeg-noble-v1
+
+      - name: System packages (ffmpeg; Blender's runtime libs only when Blender is needed, below)
+        if: steps.gate.outputs.run == 'true'
+        timeout-minutes: 8   # a stuck apt (lock or mirror) must never burn the job's 90 minutes
+        run: |
+          # the runner image's package lists are usually fresh enough: skip the (sometimes minutes-long) update.
+          # Every apt call is time-boxed; a stuck one is killed and retried once after a fresh update.
+          mkdir -p ~/apt-debs/partial
+          apt_opts=(-o DPkg::Lock::Timeout=60 -o Acquire::http::Timeout=30 -o Acquire::Retries=3
+                    -o Dir::Cache::Archives="$HOME/apt-debs" -o APT::Keep-Downloaded-Packages=true)
+          inst() { sudo timeout 150 apt-get "${apt_opts[@]}" install -y -q --no-install-recommends ffmpeg; }
+          inst || { sudo timeout 150 apt-get "${apt_opts[@]}" update -q && inst; }
+          sudo chown -R "$(id -u):$(id -g)" ~/apt-debs
+
+      - name: Save ffmpeg's .deb files (first run only)
+        if: steps.gate.outputs.run == 'true' && steps.apt-cache.outputs.cache-hit != 'true'
+        continue-on-error: true
+        uses: actions/cache/save@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        with:
+          path: ~/apt-debs
+          key: apt-ffmpeg-noble-v1
+
+      - name: Python packages (hash-locked when requirements.lock.txt exists)
+        if: steps.gate.outputs.run == 'true'
+        env:
+          WANT_CLAUDE: ${{ secrets.ANTHROPIC_API_KEY != '' }}
+        run: |
+          if [ -f requirements.lock.txt ]; then
+            pip install --require-hashes --no-deps -r requirements.lock.txt
+            pip install pytest==8.3.3
+          else
+            echo "::warning::no requirements.lock.txt yet (run the lock-deps workflow); installing exact pins without hashes"
+            pip install -r requirements-dev.txt
+            if [ "$WANT_CLAUDE" = "true" ]; then pip install -r requirements-claude.txt; fi
+          fi
+
+      # The full suite runs on every push (ci.yml). Here: the safety tests only (seconds, not a minute): the
+      # "upload-only" endpoint guard, the hardening checks, the ledger, the YouTube client, the slot gate, variety.
+      - name: Safety tests (upload-only endpoint guard, ledger, gate; no secrets in this step)
+        if: steps.gate.outputs.run == 'true'
+        run: >-
+          python -m pytest -q tests/test_endpoint_guard.py tests/test_hardening.py tests/test_state.py
+          tests/test_youtube.py tests/test_slots.py tests/test_variety.py
+
+      - name: Fonts (EB Garamond, hash-pinned; Merriweather if the lock is not pinned yet)
+        if: steps.gate.outputs.run == 'true'
+        run: python -m bot.fonts ensure
+
+      - name: Restore sprite cache
+        if: steps.gate.outputs.run == 'true'
+        id: sprites-cache
+        uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        with:
+          path: assets/sprites/cache
+          key: sprites-${{ env.BLENDER_VERSION }}-${{ hashFiles('blender/*.py', 'bot/sprites.py') }}
+
+      - name: Download Blender (sha256 pinned in this file)
+        id: blender
+        if: steps.gate.outputs.run == 'true' && (steps.sprites-cache.outputs.cache-hit != 'true') && steps.topic.outputs.world != 'true'
+        run: |
+          if [ -z "$BLENDER_SHA256" ]; then
+            echo "::warning::BLENDER_SHA256 is empty: not downloading Blender; animated shorts use the seed sprites"
+            exit 0
+          fi
+          sudo apt-get install -y -q --no-install-recommends libxi6 libxxf86vm1 libxfixes3 libxrender1 \
+            libxkbcommon0 libsm6 libgl1 libegl1
+          tarball="blender-${BLENDER_VERSION}-linux-x64.tar.xz"
+          curl -fsSL --proto '=https' --tlsv1.2 --retry 3 -o "/tmp/$tarball" \
+            "https://download.blender.org/release/Blender${BLENDER_SERIES}/$tarball"
+          echo "$BLENDER_SHA256  /tmp/$tarball" | sha256sum -c -
+          mkdir -p ~/blender && tar -xJf "/tmp/$tarball" -C ~/blender --strip-components=1
+          echo "ok=true" >> "$GITHUB_OUTPUT"
+
+      - name: Render cast sprites (Cycles CPU)
+        if: steps.gate.outputs.run == 'true' && (steps.blender.outputs.ok == 'true')
+        run: |
+          BLENDER="$HOME/blender/blender" python -m bot sprites \
+            || echo "::warning::Blender sprite render failed; animated shorts will use the seed sprites"
+
+      - name: Save sprite cache (only a complete render)
+        if: steps.gate.outputs.run == 'true' && (steps.blender.outputs.ok == 'true' && hashFiles('assets/sprites/cache/*/DONE') != '')
+        uses: actions/cache/save@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        with:
+          path: assets/sprites/cache
+          key: sprites-${{ env.BLENDER_VERSION }}-${{ hashFiles('blender/*.py', 'bot/sprites.py') }}
+
+      - name: Footage (Shorts footage-v4 8:9 pack; the long video footage-v4-wide 16:9; all 13 levels, photoreal look)
+        if: steps.gate.outputs.run == 'true' && steps.topic.outputs.world != 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p footage
+          pack=footage-v4
+          if [ "$BOT_KIND" = "long" ]; then pack=footage-v4-wide; fi
+          gh release download "$pack" --dir footage --pattern '*' --clobber \
+            || { echo "::warning::no $pack release; falling back to footage-v4"; \
+                 gh release download footage-v4 --dir footage --pattern '*' --clobber; } \
+            || echo "::warning::no footage release: no episode can be made"
+
+      # the narrator (bot/voice.py): kokoro-onnx + its deps, hash-locked; the model files checked against their sha256.
+      # Any failure here only means no voice (the edit is otherwise unchanged).
+      - name: Narrator voice (Kokoro, Apache-2.0 model; hash-pinned packages and model)
+        if: steps.gate.outputs.run == 'true' && vars.BOT_VOICE != 'off'
+        continue-on-error: true
+        timeout-minutes: 5
+        run: |
+          pip install --require-hashes --no-deps -r requirements-voice.txt
+          mkdir -p voice
+          base=https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0
+          curl -fsSL --proto '=https' --retry 3 -o voice/kokoro-v1.0.int8.onnx "$base/kokoro-v1.0.int8.onnx"
+          curl -fsSL --proto '=https' --retry 3 -o voice/voices-v1.0.bin "$base/voices-v1.0.bin"
+          echo "6e742170d309016e5891a994e1ce1559c702a2ccd0075e67ef7157974f6406cb  voice/kokoro-v1.0.int8.onnx" > voice.sha256
+          echo "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d  voice/voices-v1.0.bin" >> voice.sha256
+          sha256sum -c voice.sha256 || { echo "::warning::voice model checksum mismatch: no narrator"; rm -rf voice; }
+
+      # real music (bot/music.py): the music-v1 pack, ~100 MB of Opus; without it the edits use the synth score
+      - name: Music (Kevin MacLeod tracks, CC BY 4.0, credited per video)
+        if: steps.gate.outputs.run == 'true'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p music
+          gh release download music-v1 --dir music --pattern '*.opus' --clobber || echo "::warning::no music-v1 release: the synth score is used"
+
+      # ---- Remotion text overlay (render/). Every step here is allowed to fail: the bot then burns captions in with
+      # Pillow instead, so the episode still ships. Node packages come only from render/package-lock.json with
+      # install scripts off; the browser is the runner's preinstalled Google Chrome (never downloaded).
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        if: steps.gate.outputs.run == 'true' && steps.topic.outputs.world != 'true'
+        continue-on-error: true
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Restore overlay node_modules (keyed by the lockfile)
+        if: steps.gate.outputs.run == 'true' && steps.topic.outputs.world != 'true'
+        id: node-cache
+        uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        with:
+          path: render/node_modules
+          key: overlay-${{ runner.os }}-node${{ env.NODE_VERSION }}-${{ hashFiles('render/package-lock.json') }}
+
+      - name: Overlay packages (npm ci from the lockfile, no install scripts)
+        id: npm
+        if: steps.gate.outputs.run == 'true' && (steps.node-cache.outputs.cache-hit != 'true') && steps.topic.outputs.world != 'true'
+        continue-on-error: true
+        timeout-minutes: 10
+        working-directory: render
+        run: npm ci --ignore-scripts --no-audit --no-fund
+
+      - name: Save overlay node_modules (only a clean install)
+        if: steps.gate.outputs.run == 'true' && (steps.node-cache.outputs.cache-hit != 'true' && steps.npm.outcome == 'success')
+        continue-on-error: true
+        uses: actions/cache/save@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        with:
+          path: render/node_modules
+          key: overlay-${{ runner.os }}-node${{ env.NODE_VERSION }}-${{ hashFiles('render/package-lock.json') }}
+
+      - name: Chrome for the overlay (preinstalled Google Chrome + its runtime libs)
+        if: steps.gate.outputs.run == 'true' && steps.topic.outputs.world != 'true'
+        continue-on-error: true
+        timeout-minutes: 5
+        run: |
+          sudo apt-get install -y -q --no-install-recommends libnss3 libgbm1 libxkbcommon0 libasound2t64 \
+            libatk-bridge2.0-0t64 libcups2t64 libxcomposite1 libxdamage1 libxrandr2 libpango-1.0-0 libcairo2 \
+            || echo "::warning::could not install Chrome runtime libs"
+          for c in /usr/bin/google-chrome /usr/bin/google-chrome-stable /opt/google/chrome/chrome; do
+            if [ -x "$c" ]; then
+              echo "REMOTION_BROWSER_EXECUTABLE=$c" >> "$GITHUB_ENV"
+              echo "overlay browser: $("$c" --version)" | tee -a "$GITHUB_STEP_SUMMARY"
+              exit 0
+            fi
+          done
+          echo "::warning::no Google Chrome on the runner: this episode will use burned captions"
+
+      # the plan measures each clip it may use (a tiny decode of the whole 1080p file: ~1 minute of a long video's job);
+      # the numbers never change within a footage release, so they are kept between runs. Data only (floats, checked
+      # on load); a new cache entry is saved only when this run measured new clips.
+      - name: Restore clip profiles (per kind; keyed by clip name + file size, so a new release re-measures)
+        if: steps.gate.outputs.run == 'true'
+        continue-on-error: true
+        uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        with:
+          path: .profile-cache
+          key: profiles-v1-${{ steps.decide.outputs.kind }}-${{ github.run_id }}
+          restore-keys: profiles-v1-${{ steps.decide.outputs.kind }}-
+
+      - name: Make the episode (plan, render, edit, QA)
+        if: steps.gate.outputs.run == 'true'
+        timeout-minutes: ${{ (startsWith(github.event.schedule, '23 15 ') || startsWith(github.event.schedule, '41 16 ') || inputs.kind == 'long') && 45 || 15 }}   # room for the burned-caption fallback
+        env:
+          DRY_RUN: "true"   # this job never publishes
+          BOT_OVERLAY: ${{ vars.BOT_OVERLAY || 'auto' }}
+          BOT_VOICE: ${{ vars.BOT_VOICE }}   # off | a Kokoro voice name (default am_michael)
+          BOT_BRAND: ${{ vars.BOT_BRAND }}   # world Shorts outro + description (one bot per channel)
+          BOT_TAGLINE: ${{ vars.BOT_TAGLINE }}
+          BOT_TAGLINE2: ${{ vars.BOT_TAGLINE2 }}
+          BOT_FOOTER: ${{ vars.BOT_FOOTER }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          AI_VIDEO_API_KEY: ${{ secrets.AI_VIDEO_API_KEY }}
+          AI_VIDEO_PROVIDER: ${{ secrets.AI_VIDEO_PROVIDER }}
+          AI_VIDEO_ENDPOINT: ${{ vars.AI_VIDEO_ENDPOINT }}
+          BOT_PROFILE_CACHE: .profile-cache/profiles.json
+        run: python -m bot make
+
+      - name: Save clip profiles (only when this run measured new clips)
+        if: steps.gate.outputs.run == 'true' && hashFiles('.profile-cache/dirty') != ''
+        continue-on-error: true
+        uses: actions/cache/save@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        with:
+          path: .profile-cache
+          key: profiles-v1-${{ steps.decide.outputs.kind }}-${{ github.run_id }}
+
+      - name: Keep the episode (review copy + hand-off to the publish jobs)
+        if: steps.gate.outputs.run == 'true'
+        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
+        with:
+          name: episode-${{ github.run_id }}
+          path: |
+            out/current.json
+            out/*/video.mp4
+            out/*/thumb.jpg
+            out/*/video_sheet.jpg
+            out/*/storyboard.json
+            out/*/qa.txt
+          # artifact storage on GitHub Free is 500 MB in total: a live run only needs it for its own upload job
+          # (1 day; the "youtube" environment has no approval step); a dry run is kept 3 days for review
+          retention-days: ${{ steps.decide.outputs.live == 'true' && 1 || 3 }}
+          if-no-files-found: error
+
+      - name: Summary
+        if: steps.gate.outputs.run == 'true'
+        run: |
+          python -c "import json;c=json.load(open('out/current.json'));sb=json.load(open('out/'+c['episode_id']+'/storyboard.json'));print('-', sb['episode_id'], '|', sb['template'], '|', ', '.join(sb['dream_ids']), '|', sb['title'])" >> "$GITHUB_STEP_SUMMARY"
+          head -n 7 out/*/qa.txt >> "$GITHUB_STEP_SUMMARY"
+          grep -h '^INFO' out/*/qa.txt >> "$GITHUB_STEP_SUMMARY" || true
+
+  claim:
+    needs: make
+    if: needs.make.outputs.live == 'true' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: main
+      - uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16 # v4.1.8
+        with:
+          name: episode-${{ github.run_id }}
+          path: out
+      - name: Claim the episode and push the claim BEFORE uploading (stdlib only)
+        env:
+          DRY_RUN: "false"
+          BOT_ENABLED: ${{ vars.BOT_ENABLED }}
+          YT_PRIVACY: ${{ needs.make.outputs.privacy }}
+          BOT_SLOT_DAY: ${{ needs.make.outputs.slot_day }}
+          BOT_SLOT_EXTRA: ${{ needs.make.outputs.extra }}
+        run: |
+          git pull --rebase --quiet   # claim against the newest ledger (a Short and the long video can overlap)
+          python3 -m bot.publish claim
+          git config user.name "pixelhelm-channel-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add state/episodes.jsonl
+          git commit -m "claim: $(python3 -c "import json;print(json.load(open('out/current.json'))['episode_id'])")"
+          # a Short and the long video may claim at the same time: the ledger merges (merge=union), so retry
+          pushed=false
+          for i in 1 2 3 4; do
+            if git pull --rebase --quiet && git push; then pushed=true; break; fi
+            git rebase --abort 2>/dev/null || true
+            sleep $((i * 5))
+          done
+          if [ "$pushed" != "true" ]; then echo "::error::could not push the claim; nothing uploaded"; exit 1; fi
+
+  upload:
+    needs: [make, claim]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    environment: youtube
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: main                   # includes the claim pushed by the previous job
+          persist-credentials: false
+      - uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16 # v4.1.8
+        with:
+          name: episode-${{ github.run_id }}
+          path: out
+      - name: Upload to YouTube (videos.insert + thumbnails.set only; stdlib, no packages)
+        id: upload
+        continue-on-error: true
+        env:
+          DRY_RUN: "false"
+          BOT_ENABLED: ${{ vars.BOT_ENABLED }}
+          YT_PRIVACY: ${{ needs.make.outputs.privacy }}
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+        run: python3 -m bot.publish upload
+      - name: Hand the result to the record job
+        if: always()
+        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
+        with:
+          name: result-${{ github.run_id }}
+          path: out/result.json
+          retention-days: 3
+          if-no-files-found: warn
+
+  record:
+    needs: [claim, upload]
+    if: always() && needs.claim.result == 'success'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: main
+      - uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16 # v4.1.8
+        continue-on-error: true
+        with:
+          name: result-${{ github.run_id }}
+          path: result
+      - name: Record the result (stdlib only)
+        run: |
+          if [ ! -f result/result.json ]; then
+            echo "::error::the upload job left no result. The episode stays 'claimed': check YouTube Studio before anything else."
+            exit 1
+          fi
+          set +e
+          python3 -m bot.publish record result/result.json
+          rc=$?
+          set -e
+          git config user.name "pixelhelm-channel-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add state/episodes.jsonl
+          if ! git diff --cached --quiet; then
+            git commit -m "result: $(tail -n 1 state/episodes.jsonl | python3 -c "import json,sys;r=json.loads(sys.stdin.read());print(r['episode_id'], r['status'])")"
+            pushed=false
+            for i in 1 2 3 4; do
+              if git pull --rebase --quiet && git push; then pushed=true; break; fi
+              git rebase --abort 2>/dev/null || true
+              sleep $((i * 5))
+            done
+            if [ "$pushed" != "true" ]; then
+              echo "::error::could not push the result row; the episode stays 'claimed' (check YouTube Studio)"
+              rc=1
+            fi
+          fi
+          python3 -m bot status | tail -n 5 >> "$GITHUB_STEP_SUMMARY"
+          if [ "$rc" != "0" ]; then
+            echo "::error::not uploaded cleanly (see state/episodes.jsonl). 'unclear' means: check YouTube Studio first."
+          fi
+          exit "$rc"

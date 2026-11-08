@@ -1,0 +1,18 @@
+{
+  "_note": "Frame (clip@seconds in the footage recording folder) each dream's still is grabbed from by tools/sync_assets.py --stills-from. footage-v4 (photoreal), wide/clean shots, 2026-11-06.",
+  "picks": {
+    "halls": "halls_dollyzoom_01@6.0",
+    "hotel": "hotel_walk_01@2.0",
+    "atrium": "atrium_crane_03@5.0",
+    "pool": "pool_dollyzoom_01@5.0",
+    "tunnels": "tunnels_walk_02@3.0",
+    "windows": "windows_glide_01@3.0",
+    "playplace": "playplace_glide_01@1.0",
+    "field": "field_walk_01@3.0",
+    "subway": "subway_platform_wide_01@3.0",
+    "school": "school_walk_01@2.0",
+    "library": "library_glide_01@5.0",
+    "hills": "hills_day_glide_01@1.0",
+    "train": "train_walk_01@2.0"
+  }
+}

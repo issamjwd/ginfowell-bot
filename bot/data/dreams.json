@@ -1,0 +1,262 @@
+{
+  "_note": "The dreams of liminality, in play order. Counts in copy are computed from this list (never hard-coded). Add a dream here and every template can use it. 'footage' = clip names in the footage-v1 release; 'still' = file in assets/stills; 'monster' = cast character allowed to appear in this dream in animated shorts (null = only the dreamer; owner can edit). 'gentle' = nothing hunts here (the train home): no scares, turn lines become memory lines.",
+  "dreams": [
+    {
+      "id": "halls",
+      "name": "the yellow halls",
+      "still": "halls.jpg",
+      "footage": [
+        "halls_dollyzoom_01",
+        "halls_glide_01",
+        "halls_glide_02",
+        "halls_walk_01",
+        "halls_walk_02",
+        "halls_approach_01",
+        "halls_approach_02",
+        "halls_chase_01",
+        "halls_flicker_scare_01",
+        "halls_hero_01",
+        "halls_lightsdie_01",
+        "halls_reveal_01"
+      ],
+      "monster": "Mannequin",
+      "detail": "the carpet hums",
+      "light": "warm"
+    },
+    {
+      "id": "hotel",
+      "name": "the hotel that never ends",
+      "still": "hotel.jpg",
+      "footage": [
+        "hotel_dollyzoom_01",
+        "hotel_glide_01",
+        "hotel_walk_01",
+        "hotel_walk_02",
+        "hotel_flicker_scare_01",
+        "hotel_hero_01",
+        "hotel_hop_approach_01",
+        "hotel_hop_chase_01",
+        "hotel_lightsdie_01",
+        "hotel_reveal_01"
+      ],
+      "monster": null,
+      "detail": "every door is the same door",
+      "light": "warm"
+    },
+    {
+      "id": "atrium",
+      "name": "the atrium",
+      "still": "atrium.jpg",
+      "footage": [
+        "atrium_crane_01",
+        "atrium_crane_02",
+        "atrium_crane_03",
+        "atrium_dollyzoom_01",
+        "atrium_glide_01",
+        "atrium_walk_01",
+        "atrium_walk_02",
+        "atrium_approach_01",
+        "atrium_chase_01",
+        "atrium_hero_01",
+        "atrium_reveal_01"
+      ],
+      "monster": null,
+      "detail": "the plants have never seen the sun",
+      "light": "cool"
+    },
+    {
+      "id": "pool",
+      "name": "the poolrooms",
+      "still": "pool.jpg",
+      "footage": [
+        "pool_crane_01",
+        "pool_dollyzoom_01",
+        "pool_glide_01",
+        "pool_walk_01",
+        "pool_walk_02",
+        "pool_approach_01",
+        "pool_approach_02",
+        "pool_hero_02",
+        "pool_reveal_02",
+        "pool_swimmer_rise_02",
+        "pool_wade_approach_02"
+      ],
+      "monster": null,
+      "detail": "the water is warm and nobody swims",
+      "light": "cool"
+    },
+    {
+      "id": "tunnels",
+      "name": "the flooded tunnels",
+      "still": "tunnels.jpg",
+      "footage": [
+        "tunnels_glide_02",
+        "tunnels_walk_02",
+        "tunnels_walk_03",
+        "tunnels_approach_01",
+        "tunnels_approach_02",
+        "tunnels_chase_01",
+        "tunnels_chase_02",
+        "tunnels_flicker_scare_01",
+        "tunnels_hero_01",
+        "tunnels_hero_02",
+        "tunnels_reveal_01"
+      ],
+      "monster": null,
+      "detail": "something drips just out of time",
+      "light": "cool"
+    },
+    {
+      "id": "windows",
+      "name": "the room of windows",
+      "still": "windows.jpg",
+      "footage": [
+        "windows_crane_02",
+        "windows_dollyzoom_01",
+        "windows_glide_01",
+        "windows_walk_01",
+        "windows_approach_01",
+        "windows_chase_01",
+        "windows_flicker_scare_01",
+        "windows_hero_01",
+        "windows_reveal_01"
+      ],
+      "monster": null,
+      "detail": "every window shows a different afternoon",
+      "light": "warm"
+    },
+    {
+      "id": "playplace",
+      "name": "the playplace",
+      "still": "playplace.jpg",
+      "footage": [
+        "playplace_glide_01",
+        "playplace_walk_01",
+        "playplace_approach_01",
+        "playplace_chase_01",
+        "playplace_flicker_scare_01",
+        "playplace_hero_01",
+        "playplace_reveal_01"
+      ],
+      "monster": "Bear",
+      "detail": "the slide is still warm",
+      "light": "warm"
+    },
+    {
+      "id": "field",
+      "name": "the field",
+      "still": "field.jpg",
+      "footage": [
+        "field_crane_01",
+        "field_dollyzoom_01",
+        "field_glide_01",
+        "field_walk_01",
+        "field_hero_01",
+        "field_reveal_01",
+        "field_scarecrow_approach_01",
+        "field_scarecrow_chase_01"
+      ],
+      "monster": null,
+      "detail": "it is always four in the afternoon",
+      "light": "warm"
+    },
+    {
+      "id": "subway",
+      "name": "the last station",
+      "still": "subway.jpg",
+      "footage": [
+        "subway_glide_01",
+        "subway_platform_wide_01",
+        "subway_walk_01",
+        "subway_walk_02",
+        "subway_chase_02",
+        "subway_conductor_approach_01",
+        "subway_flicker_scare_01",
+        "subway_lantern_hero_01",
+        "subway_reveal_01"
+      ],
+      "monster": null,
+      "detail": "the next train is always coming",
+      "light": "cool"
+    },
+    {
+      "id": "school",
+      "name": "school after hours",
+      "still": "school.jpg",
+      "footage": [
+        "school_dollyzoom_01",
+        "school_glide_01",
+        "school_walk_01",
+        "school_walk_02",
+        "school_approach_02",
+        "school_chase_01",
+        "school_flicker_scare_01",
+        "school_hero_01",
+        "school_hero_02",
+        "school_reveal_01"
+      ],
+      "monster": null,
+      "detail": "the clock in the hall runs backwards",
+      "light": "cool"
+    },
+    {
+      "id": "library",
+      "name": "the library of everything you said",
+      "still": "library.jpg",
+      "footage": [
+        "library_dollyzoom_01",
+        "library_glide_01",
+        "library_walk_01",
+        "library_approach_01",
+        "library_approach_02",
+        "library_bookfall_01",
+        "library_chase_02",
+        "library_flicker_scare_01",
+        "library_hero_02",
+        "library_reveal_01"
+      ],
+      "monster": null,
+      "detail": "every book is in your handwriting",
+      "light": "warm"
+    },
+    {
+      "id": "hills",
+      "name": "the hills",
+      "still": "hills.jpg",
+      "footage": [
+        "hills_day_crane_01",
+        "hills_day_dollyzoom_01",
+        "hills_day_glide_01",
+        "hills_day_walk_01",
+        "hills_day_approach_01",
+        "hills_day_hero_01",
+        "hills_night_approach_01",
+        "hills_night_chase_01",
+        "hills_night_hero_01",
+        "hills_night_reveal_01"
+      ],
+      "monster": "Neighbour",
+      "detail": "every house is home until the lamps go out",
+      "light": "dusk"
+    },
+    {
+      "id": "train",
+      "name": "the train home",
+      "still": "train.jpg",
+      "footage": [
+        "train_dollyzoom_01",
+        "train_glide_01",
+        "train_walk_01",
+        "train_walk_02",
+        "train_approach_01",
+        "train_chase_01",
+        "train_hero_01",
+        "train_reveal_01"
+      ],
+      "monster": null,
+      "detail": "the seats are warm from someone",
+      "light": "warm",
+      "gentle": true
+    }
+  ]
+}
