@@ -17,7 +17,7 @@ from PIL import Image
 
 from . import (ai_video, config, footage, longform, music, overlay, palette, planner, qa, sprites, storyboard, thumbs, topic,
                world, writer_claude)
-from .render import Renderer
+from .render import Renderer, fit_audio_to_video
 from .state import Ledger
 
 log = logging.getLogger(__name__)
@@ -107,6 +107,7 @@ def _world(settings: config.Settings, history: list[dict], used: set[str], seed:
 
 
 def _qa(video: Path, sb: dict, w: int, h: int) -> qa.Report:
+    fit_audio_to_video(video)                      # the audio ends with the picture (A/V gate <= 0.05 s)
     if sb.get("kind") == "long":
         return qa.check(video, w, h, max_seconds=config.LONG_MAX_SECONDS, min_seconds=config.LONG_MIN_SECONDS)
     return qa.check(video, w, h)
@@ -135,6 +136,7 @@ def _single_pass(sb: dict, folder: Path, video: Path, w: int, h: int, sprite_dir
         raise overlay.OverlayError(f"single-pass video is {got:.2f}s, the storyboard {want:.2f}s")
     # QA and the review contact sheet share ONE decode of the finished video (each used to decode it on its own)
     want_frames = overlay.sheet_frames(sb, config.FPS)
+    fit_audio_to_video(video)
     with tempfile.TemporaryDirectory(prefix="sheet-") as td:
         report = qa.check(video, w, h, max_seconds=config.LONG_MAX_SECONDS, min_seconds=config.LONG_MIN_SECONDS,
                           grab=(want_frames, w // 3, Path(td)))
