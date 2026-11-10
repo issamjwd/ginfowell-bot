@@ -576,3 +576,39 @@ def _contact(frames: list[Image.Image], path: Path) -> None:
         sheet.paste(f, ((i % cols) * fw, (i // cols) * fh))
     sheet.save(path, quality=88)
 
+
+
+AV_SLACK = 0.04   # audio may outlast the picture by this much (the QA gates allow 0.05 s)
+
+
+def _stream_seconds(path: Path) -> dict[str, float]:
+    out = subprocess.run([config.ffprobe_exe(), "-v", "error", "-show_entries", "stream=codec_type,duration",
+                          "-of", "json", str(path)], capture_output=True, text=True, timeout=60)
+    if out.returncode != 0:
+        raise RuntimeError(f"ffprobe failed: {out.stderr.strip()[-300:]}")
+    streams = json.loads(out.stdout).get("streams", [])
+    return {s["codec_type"]: float(s["duration"]) for s in streams if s.get("duration") not in (None, "N/A")}
+
+
+def fit_audio_to_video(path: Path) -> Path:
+    """End the audio with the picture. `-shortest` with stream copy can leave the AAC running past the last frame
+    (measured 2026-11-10: 115 ms on a Short). A stream-copy re-mux with the picture's exact length fixes it without
+    re-encoding anything. Leaves a file that already fits untouched."""
+    try:
+        d = _stream_seconds(path)
+    except (RuntimeError, OSError, ValueError, subprocess.TimeoutExpired):
+        return path                                  # unreadable: QA rejects it with the real reason
+    if "video" not in d or "audio" not in d or d["audio"] - d["video"] <= AV_SLACK:
+        return path
+    tmp = path.with_name(path.stem + ".fit.tmp.mp4")
+    try:
+        p = subprocess.run([config.ffmpeg_exe(), "-loglevel", "error", "-y", "-i", str(path), "-map", "0", "-c", "copy",
+                            "-t", f"{d['video']:.6f}", "-movflags", "+faststart", str(tmp)],
+                           capture_output=True, text=True, timeout=300)
+        if p.returncode != 0:
+            raise RuntimeError(f"audio trim failed: {p.stderr.strip()[-300:]}")
+        os.replace(tmp, path)
+    finally:
+        tmp.unlink(missing_ok=True)
+    log.info("audio trimmed to the picture: %.3fs -> %.3fs", d["audio"], d["video"])
+    return path

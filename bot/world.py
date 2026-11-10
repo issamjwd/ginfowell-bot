@@ -40,6 +40,7 @@ import numpy as np
 from PIL import Image, ImageDraw
 
 from . import config, fonts, music, palette, qa, style, voice
+from .render import fit_audio_to_video
 from .state import fingerprint
 
 log = logging.getLogger(__name__)
@@ -157,6 +158,35 @@ def clean(text: str) -> str:
 
 def first_sentence(text: str) -> str:
     return re.split(r"(?<=[.!?])\s+(?=[A-Z])", clean(text), maxsplit=1)[0].strip()
+
+
+CAPTION_MAX = 80   # a NASA clip caption is read in ~4 s on a phone
+
+
+def tidy_caption(text: str) -> str:
+    """A NASA archive sentence -> a caption: no clock times, no camera boilerplate, short.
+    'Cameras outside the International Space Station captured views August 31 of Hurricane Dorian at 11:28 a.m.'
+    -> 'Hurricane Dorian from the space station, August 31.'"""
+    t = clean(text).rstrip(".")
+    t = re.sub(r",?\s*(?:at|from)?\s*\d{1,2}:\d{2}\s*(?:[ap]\.?m\.?)?(?:\s*(?:[ECMP][SD]T|UTC|GMT))?", "", t, flags=re.I)
+    t = re.sub(r"\bin altitude\b", "up", t)
+    t = t.replace("International Space Station", "space station")
+    m = re.match(r"(?i)^cameras? (?:outside|on|aboard) (?:the )?space station (?:captured|recorded|show(?:ed)?) "
+                 r"(?:views|images|video|footage)(?: of)?(?: (?P<date>[A-Z][a-z]+ \d{1,2}))?(?: of)? (?P<what>.+)$", t)
+    if m:
+        where = "" if re.search(r"\bfrom\b", m["what"]) else " from the space station"    # never 'from .. from'
+        t = f"{m['what']}{where}" + (f", {m['date']}" if m["date"] else "")
+    t = re.sub(r"\s+", " ", t).strip(" ,")
+    if len(t) > CAPTION_MAX - 1:                       # cut at the last clause or word that fits
+        cut = t[:CAPTION_MAX - 1]
+        t = cut[:cut.rfind(",")] if "," in cut[20:] else cut[:cut.rfind(" ")]
+    t = t.strip(" ,")
+    return (t[:1].upper() + t[1:] + ".") if t else ""
+
+
+def clip_credit(nasa_id: str) -> str:
+    """The on-screen credit of a NASA clip (the library ids stay in the description, not on screen)."""
+    return "NASA VIDEO"
 
 
 def words(text: str) -> int:
@@ -501,7 +531,8 @@ def plan_clips(rng: random.Random, recent_ids: set[str], recent_topics: set[str]
                 log.info("skip clip %s: %s", nid, e)
                 continue
             seen.add(cap)
-            scenes.append(Scene(im, cap, credit=f"NASA  ·  {nid[:40]}", seconds=max(CLIP_SECONDS, read_seconds(cap)),
+            cap = tidy_caption(cap) or cap
+            scenes.append(Scene(im, cap, credit=clip_credit(nid), seconds=max(CLIP_SECONDS, read_seconds(cap)),
                                 media_id=nid, clip=f, clip_start=start, clip_dur=dur))
         if len(scenes) < MIN_SCENES:
             continue
@@ -1005,7 +1036,7 @@ def _make(settings: config.Settings, history: list[dict], used: set[str], seed: 
     log.info("planned world Short %s: %s (%s)", sb["episode_id"], sb["template"], p["topic"])
     folder = out_root / sb["episode_id"]
     folder.mkdir(parents=True, exist_ok=True)
-    video = render(p, folder / "video.mp4", w, h, seed)
+    video = fit_audio_to_video(render(p, folder / "video.mp4", w, h, seed))
     report = qa.check(video, w, h)
     report.info["text"] = "world short (Pillow text)"
     (folder / "qa.txt").write_text(report.as_text() + f"\nINFO  text: {report.info['text']}\n"

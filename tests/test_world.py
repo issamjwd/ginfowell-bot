@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import json
 import random
+import re
 from datetime import datetime, timezone
 
 import pytest
@@ -281,3 +282,23 @@ def test_accent_never_repeats_the_last_three():
     from bot import palette
     hist = [{"accent": a} for a in palette.ACCENTS[:3]]
     assert all(palette.pick(hist, s)["accent"] not in palette.ACCENTS[:3] for s in range(20))
+
+
+@pytest.mark.parametrize("raw, name", [
+    ("The International Space Station flew 260 miles over Hurricane Erin at 11:41 a.m.", "Erin"),
+    ("Cameras outside the International Space Station captured views August 31 of Hurricane Dorian at 11:28 a.m.",
+     "Dorian"),
+    ("Cameras on the International Space Station captured views of Hurricane Helene at 12:50 p.m.", "Helene"),
+    ("Cameras outside the International Space Station captured views September 1 of Hurricane Dorian from 260 miles "
+     "in altitude at 12:16 p.m.", "Dorian"),
+])
+def test_clip_captions_read_like_captions(raw, name):
+    """Review 2026-11-10: NASA archive sentences were shown as-is (clock times, 'captured views', 100+ characters)."""
+    cap = world.tidy_caption(raw)
+    assert name in cap and len(cap) <= 80, cap
+    assert not re.search(r"\d:\d\d|a\.m\.|p\.m\.|captured views", cap), cap
+    assert cap[0].isupper() and cap.endswith(".")
+
+
+def test_clip_credit_is_not_a_file_name():
+    assert world.clip_credit("jsc2025m000148-Hurricane_Erin_Seen_From_International_Space_Station") == "NASA VIDEO"
